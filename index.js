@@ -18,12 +18,13 @@ const initializeContract = async ()=>{
     window.contract = fs.readFileSync(__dirname + '/SocialChangeGame.json', 'utf8');
     window.contract = JSON.parse(window.contract);
     const abi = window.contract.abi;
-    const contractAddress = window.contract.networks['2'].address;
+    const contractAddress = "0x7EaC0A434683f0f5e36C0954Cb41148404762fD1";
     const contractInstance = hmy.contracts.createContract(abi,contractAddress);
     return contractInstance;
 }
 
 window.contract = await initializeContract();
+await connect();
 
 btn_claim = document.querySelector(".claim");
 btn_claim.addEventListener("click", claim);
@@ -46,7 +47,7 @@ async function claim(){
     console.log(result.toString());
 }
 
-async function addMoney() {
+async function join() {
     window.contract.wallet.signTransaction = async (tx)=>{
         tx.from = window.account.address;
         const signTx = await signTransaction(tx);
